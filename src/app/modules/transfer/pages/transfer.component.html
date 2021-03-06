@@ -1,0 +1,57 @@
+<form [formGroup]="userForm" (ngSubmit)="submitForm()" novalidate autocomplete="off">
+  <div class="container">
+    <div class="transfer-container">
+      <div>
+        Address: {{user.address}} <br />
+        Balance: {{user.balance}} Eth
+      </div>
+      <div class="form-group">
+        <label for="transferAddress" class="text-bold"
+          [ngClass]="(isValidInput('transferAddress') && (userForm.controls['transferAddress'].errors.required || userForm.controls['transferAddress'].errors.minlength || userForm.controls['transferAddress'].errors.maxlength)) ? 'text-red' :  ''">Transfer
+          Address</label>
+        <input id="transferAddress" type="text" class="form-control" formControlName="transferAddress"
+          autocomplete="off"
+          [ngClass]="(isValidInput('transferAddress') && (userForm.controls['transferAddress'].errors.required || userForm.controls['transferAddress'].errors.minlength || userForm.controls['transferAddress'].errors.maxlength)) ? 'bd-red' : ''">
+        <div *ngIf="isValidInput('transferAddress')" class="m-0 p-0">
+          <div *ngFor="let validation of accountValidationMessages.transferAddress">
+            <div *ngIf="userForm.controls['transferAddress'].errors[validation.type]">
+              <small class="text-red">{{validation.message}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="amount" class="text-bold"
+          [ngClass]="(isValidInput('amount') && (userForm.controls['amount'].errors.required || userForm.controls['amount'].errors.pattern)) ? 'text-red' :  ''">Amount</label>
+        <input id="amount" type="text" class="form-control" formControlName="amount" autocomplete="off"
+          [ngClass]="(isValidInput('amount') && (userForm.controls['amount'].errors.required || userForm.controls['amount'].errors.pattern)) ? 'bd-red' : ''">
+        <div *ngIf="isValidInput('amount')" class="m-0 p-0">
+          <div *ngFor="let validation of accountValidationMessages.amount">
+            <div *ngIf="userForm.controls['amount'].errors[validation.type]">
+              <small class="text-red">{{validation.message}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="remarks" class="text-bold"
+          [ngClass]="(isValidInput('remarks') && (userForm.controls['remarks'].errors.required)) ? 'text-red' :  ''">Remarks</label>
+        <input id="remarks" type="text" class="form-control" formControlName="remarks" autocomplete="off"
+          [ngClass]="(isValidInput('remarks') && (userForm.controls['remarks'].errors.required)) ? 'bd-red' : ''">
+        <div *ngIf="isValidInput('remarks')" class="m-0 p-0">
+          <div *ngFor="let validation of accountValidationMessages.remarks">
+            <div *ngIf="userForm.controls['remarks'].errors[validation.type]">
+              <small class="text-red">{{validation.message}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="width: 100px">
+        <button type="submit">Transfer Ether</button>
+      </div>
+    </div>
+  </div>
+</form>
